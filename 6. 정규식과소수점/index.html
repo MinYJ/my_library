@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KB</title>
+</head>
+<body>
+  <input type="text" onkeyup="inputNumberFormat(this)">
+  <script>
+    function inputNumberFormat(obj) {
+      // checkTwoDecimalPoint(obj);
+      /*
+      ** 예시) 123.
+      ** toLocaleString할 경우 123으로 변경되어 소수점 찍기 불가능
+      */
+      console.log(obj.value.indexOf('.'));
+      console.log(obj.value.indexOf('.0'));
+      console.log(obj.value.length - 1);
+
+      obj.value = obj.value.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+      
+      
+    }
+    function checkTwoDecimalPoint(obj) {
+      var prev = "";
+      var regxp = /^\d+(,\d{0,4}){0,3}(\.\d{0,2})?$/;
+
+      /*
+      ** 예시) 1,234 일경우
+      ** 1234로 변경 후 정규식 검사
+      */
+
+      if(obj.value.indexOf(',') >= 0) obj.value = obj.value.replaceAll(',', '');
+      
+      /* 
+      ** 정규식조건 부적합한 경우
+      ** 예시) 123.123 일경우
+      ** 123.12으로 변경
+      */
+      if(!regxp.test(obj.value)) {
+        console.log(regxp.test(obj.value));
+        obj.value = obj.value.substring(0, obj.value.length - 1);
+      }
+    }
+  </script>
+</body>
+</html>

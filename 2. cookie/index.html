@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <select name="food" id="food">
+    <option value="1">과자</option>
+    <option value="10">음료수</option>
+    <option value="100">라면</option>
+  </select>
+  <button id="btn">버튼</button>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js">
+  </script>
+
+  <script>
+    $('#btn').on("click", function() {
+      set();
+    })
+
+    function set() {
+      const value = $("#food").val();
+      setCookie("food", value, 100);
+      // console.log($("#food option:selected").val());
+      // console.log($("#food").val());
+      // console.log($('select[name="food"]').val());
+    }
+    function setCookie(name, value, exp) {
+      const date = new Date();
+      date.setTime(date.getTime() + exp*60*60*24*100);
+      document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+      // date.toTimeString() -> 권장하지 않음, 
+      // date.toUTCString()
+    }
+    //document.cookie = "user=John; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT"
+
+    function getCookie(name) {
+      const value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+      return value ? value[2] : null;
+    }
+
+    function delCookie(name){
+      let date = new Date();
+      date.setDate(date.getDate() - 100);
+      let Cookie = `${name}=;Expires=${date.toUTCString()}`
+      document.cookie = Cookie;
+  }
+  </script>
+</body>
+</html>
